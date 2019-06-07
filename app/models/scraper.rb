@@ -68,21 +68,61 @@ class Scraper < ApplicationRecord
         end 
     end
 
-    # def scrapeForNewBeer
+    def scrapeForNewBeer
+       page = HTTParty.get("https://untappd.com/search?q=#{self.search_params}")
+       @page = Nokogiri::HTML(page)
+       @prospective_beer_list = []
+       self.iterateOverProspectiveBeers
+    end 
 
-    # end 
+    def iterateOverProspectiveBeers
+        @page.css('div.results-container').children.each do |beer|
+            if !beer.css('p.name').empty?     
+                @beer = beer
+                self.parseProspectiveBeer
+            end 
+        end
+        self.returnProspectiveBeers
+    end 
 
-    # def parseProspectivebeers
+    def parseProspectiveBeer
+        @name = @beer.css('p.name').children.text.downcase
+        if @beer.css('p.brewery').children.text.empty?             
+            @brewery = @beer.css('p.style')[0].text
+            @style = @beer.css('p.style')[1].text
+        else
+            @brewery = @beer.css('p.brewery').children.text.downcase
+            @style = @beer.css('p.style').text
+        end
+        @abv = @beer.css('p.abv').text.to_f
+        @ibu = @beer.css('p.ibu').text.to_f
+        @rating = @beer.css('span.num').text.gsub(/[()]/,"").to_f
+        @img_url = @beer.css('img')[0].attributes['src'].value
+        # @brewery_id = Brewery.find_or_create_by(name: @brewery).id
+        self.createBeerInstance
+    end
 
-    # end 
+    def createBeerInstance
+        @prospective_beer = ProscpectiveBeer.new(
+            name: @name,
+            style: @style,
+            abv: @abv,
+            ibu: @ibu,
+            rating: @rating,
+            img_url: @img_url,
+            brewery: @brewery
+        ) 
+        self.pushBeerToProspectiveBeerList
+    end
 
-    # def sendProspectiveBeers
+    def pushBeerToProspectiveBeerList
+        @prospective_beer_list << @prospective_beer
+    end 
 
-    # end 
-
-
-
-
+    def returnProspectiveBeers
+        byebug
+        @prospective_beer_list
+    end
 
 end
 

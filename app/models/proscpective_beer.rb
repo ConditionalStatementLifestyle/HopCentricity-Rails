@@ -1,0 +1,2 @@
+class ProscpectiveBeer < ApplicationRecord
+end

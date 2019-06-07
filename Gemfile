@@ -19,6 +19,7 @@ gem 'httparty'
 gem 'nokogiri'
 gem 'mechanize'
 
+gem 'omniauth-google-oauth2'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
