@@ -1,5 +1,5 @@
 class Beer < ApplicationRecord
-    has_one :brewery
+    belongs_to :brewery
     has_many :users, through: :reviews
 
     def create_new(params)
