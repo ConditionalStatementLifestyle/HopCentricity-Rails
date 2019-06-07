@@ -14,16 +14,18 @@ gem 'puma', '~> 3.11'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
 gem 'nokogiri'
 gem 'mechanize'
 
 gem 'omniauth-google-oauth2'
+gem 'google-id-token'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'active_model_serializers'
+# gem 'bcrypt', '~> 3.1.7'
+# gem "jwt", "~> 2.1"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
