@@ -68,6 +68,22 @@ class Scraper < ApplicationRecord
         end 
     end
 
+    # def scrapeForNewBeer
+
+    # end 
+
+    # def parseProspectivebeers
+
+    # end 
+
+    # def sendProspectiveBeers
+
+    # end 
+
+
+
+
+
 end
 
 
