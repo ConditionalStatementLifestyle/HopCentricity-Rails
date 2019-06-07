@@ -3,10 +3,12 @@ class AuthController < ApplicationController
   def login
     if is_authorized(params["token"])
       puts 'logged in'
+      @user = User.find_or_create_by(email: params['email'])
+      @user.username = params['username']
+      @user.save
     else
       puts 'failed login'
     end
-    byebug
   end
 
   def is_authorized(token)
