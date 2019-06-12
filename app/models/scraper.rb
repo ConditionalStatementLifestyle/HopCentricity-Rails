@@ -120,7 +120,6 @@ class Scraper < ApplicationRecord
     end 
 
     def returnProspectiveBeers
-        byebug
         @prospective_beer_list
     end
 

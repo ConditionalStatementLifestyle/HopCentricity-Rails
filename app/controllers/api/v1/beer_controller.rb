@@ -1,14 +1,37 @@
 class Api::V1::BeerController < ApplicationController
 
     def search
-        @beer_results = Beer.where("name like ?", "%#{params['query']}%")
+        if params['type'] == 'beername'
+            @beer_results = Beer.where("name like ?", "%#{params['query']}%")
+              if @beer_results.empty?
+                scraper = Scraper.new
+                scraper.search_params = params['query']
+                @beer_results = scraper.scrapeForNewBeer
+            end
+        elsif params['type'] == 'beertype'
+            query = params['query'][6..-1]
+            @beer_results = Beer.where("style like ?", "%#{query}%")
+        else
+            @beer_results = []
+            brewery_matches = Brewery.where("name like ?", "%#{params['query']}%")
+                brewery_matches.each do |brewery|
+                    beers = Beer.where(brewery_id: brewery.id)
+                    beers.each do |beer|
+                        @beer_results << beer 
+                    end 
+                end 
+        end
         # if @beer_results.empty?
             # scraper = Scraper.new
             # scraper.search_params = params['query']
             # @prospective_beers = scraper.scrapeForNewBeer
             # render json: @prospective_beers
         # end
-        render json: @beer_results
+        if @beer_results.length > 150 
+            render json: @beer_results[0..149]
+        else 
+            render json: @beer_results
+        end
     end 
 
     def create
