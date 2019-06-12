@@ -6,8 +6,9 @@ class Api::V1::BeerController < ApplicationController
             # scraper = Scraper.new
             # scraper.search_params = params['query']
             # @prospective_beers = scraper.scrapeForNewBeer
-        end
-        render json: @prospective_beers
+            # render json: @prospective_beers
+        # end
+        render json: @beer_results
     end 
 
     def create
@@ -15,4 +16,3 @@ class Api::V1::BeerController < ApplicationController
         render json: @beer
     end
 end
- 
