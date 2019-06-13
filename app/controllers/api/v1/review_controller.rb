@@ -1,7 +1,9 @@
 class Api::V1::ReviewController < ApplicationController
 
-    def index
-        
+    def user_reviews
+        @user = User.find_by(email: params['email'])
+        @reviews = Review.where(user_id: @user.id)
+        render json: @reviews
     end 
 
     def create
