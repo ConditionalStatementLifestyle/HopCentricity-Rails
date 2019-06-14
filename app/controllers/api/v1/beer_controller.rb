@@ -27,8 +27,10 @@ class Api::V1::BeerController < ApplicationController
             # @prospective_beers = scraper.scrapeForNewBeer
             # render json: @prospective_beers
         # end
-        if @beer_results.length > 150 
-            render json: @beer_results[0..149]
+        if @beer_results.length > 50 
+            start_index = rand(@beer_results.length - 50)
+            end_index = start_index + 49
+            render json: @beer_results[start_index..end_index]
         else 
             render json: @beer_results
         end
