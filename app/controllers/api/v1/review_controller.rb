@@ -35,4 +35,16 @@ class Api::V1::ReviewController < ApplicationController
         render json: @review
     end
 
+    def update 
+        @review = Review.find(params['id'])
+        @review.update(content: params['content'], rating: params['rating'])
+        @review.save
+        render json: @review
+    end
+
+    def destroy 
+        @review = Review.find(params['id'])
+        @review.destroy
+    end
+
 end
