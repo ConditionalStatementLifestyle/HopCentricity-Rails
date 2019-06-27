@@ -6,6 +6,7 @@ class AuthController < ApplicationController
       @user = User.find_or_create_by(email: params['email'])
       @user.username = params['username']
       @user.save
+      render json: @user
     else
       puts 'failed login'
     end
